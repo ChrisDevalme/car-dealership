@@ -41,7 +41,21 @@ public class Dealership {
         this.phone = phone;
     }
 
-    public List<Vehicle> getVehiclesByPrice(double minPrice, double maxPrice) { return null; }
+    public List<Vehicle> getVehiclesByPrice(double minPrice, double maxPrice) {
+
+        List<Vehicle> foundVehicles = new ArrayList<>();
+        boolean found = false;
+        for (Vehicle vehicle : inventory) {
+            if(vehicle.getPrice() >= minPrice && vehicle.getPrice() <= maxPrice){
+                foundVehicles.add(vehicle);
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("No Veicles in that price range");
+        }
+        return foundVehicles;
+    }
     public List<Vehicle> getVehiclesByMakeModel(String make, String model) { return null; }
     public List<Vehicle> getVehiclesByYear(int minYear, int maxYear) { return null; }
     public List<Vehicle> getVehiclesByColor(String color) { return null; }

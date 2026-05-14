@@ -6,20 +6,20 @@ import java.io.FileReader;
 public class DealershipFileManager {
     private static final String fileName = "dealership.csv";
 
-    private DealershipFileManager() {}
 
-    public static Dealership getDealership() {
+    public Dealership getDealership() {
         String line;
-        Dealership dealership = new Dealership("","","");
+        Dealership dealership = null;
         try{
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             int count = 0;
             while ((line = br.readLine()) != null) {
                 String[] lines = line.split("\\|");
                 if(count == 0) {
-                    dealership.setName(lines[0]);
-                    dealership.setAddress(lines[1]);
-                    dealership.setPhone(lines[2]);
+                    String dealershipName = lines[0];
+                    String dealershipAddress = lines[1];
+                    String dealershipPhone = lines[2];
+                    dealership = new Dealership(dealershipName, dealershipAddress, dealershipPhone);
                 } else {
                     int vehicleVin = Integer.parseInt(lines[0]);
                     int vehicleYear = Integer.parseInt(lines[1]);
