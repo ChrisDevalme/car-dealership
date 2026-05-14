@@ -126,7 +126,14 @@ public class UserInterface {
 
     }
     public void processGetByColorRequest() {
-        System.out.println("D");
+        String color = "";
+        while (color.isEmpty()) {
+            System.out.println("Please enter Make of Vehicle: ");
+            color = scanner.nextLine();
+        }
+        System.out.println("Vehicles with the color " + color + ":\n" + dealership.getVehiclesByColor(color));
+
+
     }
     public void processGetByMileageRequest() {
         System.out.println("E");
