@@ -82,7 +82,21 @@ public class UserInterface {
         System.out.println("Vehicles in the $" + minNum + " - $" + maxNum + " price range:" + "\n" + dealership.getVehiclesByPrice(minNum,maxNum));
     }
     public void processGetByMakeModelRequest() {
-        System.out.println("B");
+        String make = "";
+        while (make.isEmpty()) {
+            System.out.println("Please enter Make of Vehicle: ");
+            make = scanner.nextLine();
+        }
+        String model = "";
+        while (model.isEmpty()) {
+            System.out.println("Please enter Model of Vehicle or NA to leave blank: ");
+            model = scanner.nextLine();
+            if(model.equalsIgnoreCase("NA")){
+                model = "";
+                break;
+            }
+        }
+        System.out.println("Vehicles with your criteria: " + dealership.getVehiclesByMakeModel(make,model));
     }
     public void processGetByYearRequest() {
         System.out.println("C");
