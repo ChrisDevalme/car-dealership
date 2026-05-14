@@ -59,24 +59,24 @@ public class UserInterface {
         double minNum = -1;
         while(minNum == -1) {
             System.out.println("Please enter minimum number.");
-            if(!scanner.hasNextInt()) {
+            if(!scanner.hasNextDouble()) {
                 System.out.println("Please enter maximum number.");
                 scanner.nextLine();
                 continue;
             }
-            minNum = scanner.nextInt();
+            minNum = scanner.nextDouble();
             scanner.nextLine();
         }
 
         double maxNum = 0;
         while(maxNum == 0) {
             System.out.println("Please enter maximum number.");
-            if(!scanner.hasNextInt()) {
+            if(!scanner.hasNextDouble()) {
                 System.out.println("Entry must be a positive number.");
                 scanner.nextLine();
                 continue;
             }
-            maxNum = scanner.nextInt();
+            maxNum = scanner.nextDouble();
             scanner.nextLine();
         }
         System.out.println("Vehicles in the $" + minNum + " - $" + maxNum + " price range:" + "\n" + dealership.getVehiclesByPrice(minNum,maxNum));
@@ -99,7 +99,31 @@ public class UserInterface {
         System.out.println("Vehicles with your criteria: " + dealership.getVehiclesByMakeModel(make,model));
     }
     public void processGetByYearRequest() {
-        System.out.println("C");
+        int minYear = -1;
+        while(minYear == -1) {
+            System.out.println("Please enter minimum Year.");
+            if(!scanner.hasNextInt()) {
+                System.out.println("Entry must be a positive number.");
+                scanner.nextLine();
+                continue;
+            }
+            minYear = scanner.nextInt();
+            scanner.nextLine();
+        }
+
+        int maxYear = 0;
+        while(maxYear == 0) {
+            System.out.println("Please enter maximum Year.");
+            if(!scanner.hasNextInt()) {
+                System.out.println("Entry must be a positive number.");
+                scanner.nextLine();
+                continue;
+            }
+            maxYear = scanner.nextInt();
+            scanner.nextLine();
+        }
+        System.out.println("Vehicles in the " + minYear + " - " + maxYear + " year range:" + "\n" + dealership.getVehiclesByYear(minYear,maxYear));
+
     }
     public void processGetByColorRequest() {
         System.out.println("D");

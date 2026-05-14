@@ -74,7 +74,20 @@ public class Dealership {
         }
         return foundVehicles;
     }
-    public List<Vehicle> getVehiclesByYear(int minYear, int maxYear) { return null; }
+    public List<Vehicle> getVehiclesByYear(int minYear, int maxYear) {
+        List<Vehicle> foundVehicles = new ArrayList<>();
+        boolean found = false;
+        for (Vehicle vehicle : inventory) {
+            if(vehicle.getYear() >= minYear && vehicle.getYear() <= maxYear){
+                foundVehicles.add(vehicle);
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("No Vehicles in that year range");
+        }
+        return foundVehicles;
+    }
     public List<Vehicle> getVehiclesByColor(String color) { return null; }
     public List<Vehicle> getVehiclesByMileage(int minMilage, int maxMilage) { return null; }
     public List<Vehicle> getVehiclesByType(String vehicleType) { return null; }
