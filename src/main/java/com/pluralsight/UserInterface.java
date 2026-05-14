@@ -97,7 +97,7 @@ public class UserInterface {
         System.out.println("F");
     }
     public void processGetAllVehiclesRequest() {
-        System.out.println("G");
+        System.out.println("Inventory: \n" + dealership.getAllVehicles());
     }
     public void processAddVehicleRequest() {
         System.out.println("H");

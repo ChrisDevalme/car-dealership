@@ -52,7 +52,7 @@ public class Dealership {
             }
         }
         if(!found){
-            System.out.println("No Veicles in that price range");
+            System.out.println("No Vehicles in that price range");
         }
         return foundVehicles;
     }
@@ -75,7 +75,6 @@ public class Dealership {
     @Override
     public String toString() {
         return "Dealership Name: " + name +
-                "" +
                 "\nAddress: " + address +
                 "\nPhone Number: " + phone + '\n' +
                 "Inventory: \n" + inventory;
