@@ -1,10 +1,14 @@
 package com.pluralsight;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
     private Dealership dealership;
     private Scanner scanner;
+    private ArrayList<Vehicle> cart = new ArrayList<>();
 
     public UserInterface() {
         this.scanner = new Scanner(System.in);
@@ -13,7 +17,7 @@ public class UserInterface {
     public void display() {
         init();
         int choice = 0;
-        while(choice != 10) {
+        while(choice != 99) {
             System.out.println("Welcome to " + dealership.getName());
             System.out.println("Please make a selection: ");
             System.out.println("1) View Vehicles by price ");
@@ -25,7 +29,10 @@ public class UserInterface {
             System.out.println("7) View all Vehicles  ");
             System.out.println("8) Add a Vehicle ");
             System.out.println("9) Remove a Vehicle ");
-            System.out.println("10) Exit ");
+            System.out.println("10) View Cart");
+            System.out.println("11) Remove Vehicle from Cart");
+            System.out.println("12) Checkout");
+            System.out.println("99) Exit");
 
             if(!scanner.hasNextInt()){
                 System.out.println("Please enter a number.");
@@ -46,7 +53,10 @@ public class UserInterface {
                 case 7 -> processGetAllVehiclesRequest();
                 case 8 -> processAddVehicleRequest();
                 case 9 -> processRemoveVehicleRequest() ;
-                case 10 -> System.out.println("Thank you for visiting " + dealership.getName());
+                case 10 -> processViewCartRequest();
+                case 11 -> processRemoveFromCartRequest();
+                case 12 -> processCheckoutRequest();
+                case 99 -> System.out.println("Thank you for visiting " + dealership.getName());
                 default -> System.out.println("Invalid Choice!");
             }
         }
@@ -80,6 +90,7 @@ public class UserInterface {
             scanner.nextLine();
         }
         System.out.println("Vehicles in the $" + minNum + " - $" + maxNum + " price range:" + "\n" + dealership.getVehiclesByPrice(minNum,maxNum));
+        ProcessAddVehicleToCart(dealership.getVehiclesByPrice(minNum,maxNum));
     }
     public void processGetByMakeModelRequest() {
         String make = "";
@@ -97,6 +108,7 @@ public class UserInterface {
             }
         }
         System.out.println("Vehicles with your criteria: " + dealership.getVehiclesByMakeModel(make,model));
+        ProcessAddVehicleToCart(dealership.getVehiclesByMakeModel(make,model));
     }
     public void processGetByYearRequest() {
         int minYear = -1;
@@ -123,7 +135,7 @@ public class UserInterface {
             scanner.nextLine();
         }
         System.out.println("Vehicles in the " + minYear + " - " + maxYear + " year range:" + "\n" + dealership.getVehiclesByYear(minYear,maxYear));
-
+        ProcessAddVehicleToCart(dealership.getVehiclesByYear(minYear,maxYear));
     }
     public void processGetByColorRequest() {
         String color = "";
@@ -132,6 +144,7 @@ public class UserInterface {
             color = scanner.nextLine();
         }
         System.out.println("Vehicles with the color " + color + ":\n" + dealership.getVehiclesByColor(color));
+        ProcessAddVehicleToCart(dealership.getVehiclesByColor(color));
     }
     public void processGetByMileageRequest() {
         int minMileage = -1;
@@ -158,7 +171,7 @@ public class UserInterface {
             scanner.nextLine();
         }
         System.out.println("Vehicles in the " + minMileage + " - " + maxMileage + " mileage range:" + "\n" + dealership.getVehiclesByMileage(minMileage,maxMileage));
-
+        ProcessAddVehicleToCart( dealership.getVehiclesByMileage(minMileage,maxMileage));
     }
     public void processGetByVehicleTypeRequest() {
         String type = "";
@@ -167,9 +180,11 @@ public class UserInterface {
             type = scanner.nextLine();
         }
         System.out.println("Vehicles with the type " + type + ":\n" + dealership.getVehiclesByType(type));
+        ProcessAddVehicleToCart( dealership.getVehiclesByType(type));
     }
     public void processGetAllVehiclesRequest() {
         System.out.println("Inventory: \n" + dealership.getAllVehicles());
+        ProcessAddVehicleToCart(dealership.getAllVehicles());
     }
     public void processAddVehicleRequest() {
         System.out.println("Enter Vehicle vin");
@@ -229,10 +244,102 @@ public class UserInterface {
         }
 
     }
+    private void ProcessAddVehicleToCart(List<Vehicle> vehicles) {
+        if (vehicles.isEmpty()) {
+            return;
+        }
+
+        System.out.print("Would you like to add one of these vehicles to your cart? yes/no: ");
+        String answer = scanner.nextLine();
+
+        if (!answer.equalsIgnoreCase("yes")) {
+            return;
+        }
+
+        System.out.print("Enter VIN: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getVin() == vin) {
+                cart.add(vehicle);
+                System.out.println("Vehicle added to cart.");
+                return;
+            }
+        }
+
+        System.out.println("VIN not found in these results.");
+    }
+    public void processViewCartRequest() {
+        if (cart.isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return;
+        }
+
+        double total = 0;
+
+        System.out.println("Your Cart:");
+        for (Vehicle vehicle : cart) {
+            System.out.println(vehicle);
+            total += vehicle.getPrice();
+        }
+
+        System.out.printf("Total: $%.2f%n", total);
+    }
+    public void processRemoveFromCartRequest() {
+        if (cart.isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return;
+        }
+
+        processViewCartRequest();
+
+        System.out.print("Enter VIN to remove from cart: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        for (Vehicle vehicle : cart) {
+            if (vehicle.getVin() == vin) {
+                cart.remove(vehicle);
+                System.out.println("Vehicle removed from cart.");
+                return;
+            }
+        }
+
+        System.out.println("Vehicle not found in cart.");
+    }
+    public void processCheckoutRequest() {
+        if (cart.isEmpty()) {
+            System.out.println("Your cart is empty.\n");
+            return;
+        }
+
+        processViewCartRequest();
+
+        System.out.print("Checkout and purchase these vehicles? yes/no: ");
+        String answer = scanner.nextLine();
+
+        if (!answer.equalsIgnoreCase("yes")) {
+            System.out.println("Checkout cancelled.");
+            return;
+        }
+
+        for (Vehicle vehicle : cart) {
+            dealership.removeVehicle(vehicle);
+        }
+
+        cart.clear();
+
+        DealershipFileManager fileManager = new DealershipFileManager();
+        fileManager.saveDealership(dealership);
+
+        System.out.println("Purchase complete. Inventory updated.");
+    }
     private void init() {
         DealershipFileManager dealer = new DealershipFileManager();
         this.dealership = dealer.getDealership();
     }
+
 
 
 }
