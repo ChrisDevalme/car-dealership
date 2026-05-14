@@ -132,8 +132,6 @@ public class UserInterface {
             color = scanner.nextLine();
         }
         System.out.println("Vehicles with the color " + color + ":\n" + dealership.getVehiclesByColor(color));
-
-
     }
     public void processGetByMileageRequest() {
         int minMileage = -1;
@@ -163,7 +161,12 @@ public class UserInterface {
 
     }
     public void processGetByVehicleTypeRequest() {
-        System.out.println("F");
+        String type = "";
+        while (type.isEmpty()) {
+            System.out.println("Please enter Type of Vehicle: ");
+            type = scanner.nextLine();
+        }
+        System.out.println("Vehicles with the type " + type + ":\n" + dealership.getVehiclesByType(type));
     }
     public void processGetAllVehiclesRequest() {
         System.out.println("Inventory: \n" + dealership.getAllVehicles());

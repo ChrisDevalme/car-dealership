@@ -116,7 +116,20 @@ public class Dealership {
         }
         return foundVehicles;
     }
-    public List<Vehicle> getVehiclesByType(String vehicleType) { return null; }
+    public List<Vehicle> getVehiclesByType(String vehicleType) {
+        List<Vehicle> foundVehicles = new ArrayList<>();
+        boolean found = false;
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getVehicleType().equalsIgnoreCase(vehicleType)) {
+                foundVehicles.add(vehicle);
+                found = true;
+            }
+            if (!found) {
+                System.out.println("No Vehicles found.");
+            }
+        }
+        return foundVehicles;
+    }
 
     public List<Vehicle> getAllVehicles() {
         return inventory;
