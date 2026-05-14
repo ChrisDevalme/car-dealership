@@ -172,10 +172,62 @@ public class UserInterface {
         System.out.println("Inventory: \n" + dealership.getAllVehicles());
     }
     public void processAddVehicleRequest() {
-        System.out.println("H");
+        System.out.println("Enter Vehicle vin");
+        int vehicleVin = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter Vehicle year");
+        int vehicleYear = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter Vehicle Make");
+        String vehicleMake = scanner.nextLine();
+        System.out.println("Enter Vehicle Model");
+        String vehicleModel = scanner.nextLine();
+        System.out.println("Enter Vehicle Type");
+        String vehicleType = scanner.nextLine();
+        System.out.println("Enter Vehicle Color");
+        String vehicleColor = scanner.nextLine();
+        System.out.println("Enter Vehicle Mileage");
+        int vehicleMileage = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter Vehicle Price");
+        double vehiclePrice = scanner.nextDouble();
+        scanner.nextLine();
+
+        dealership.addVehicle(new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor,
+                vehicleMileage, vehiclePrice));
+
+        DealershipFileManager dealer = new DealershipFileManager();
+        dealer.saveDealership(dealership);
+
+
     }
     public void processRemoveVehicleRequest() {
-        System.out.println("I");
+
+        System.out.println(dealership);
+        System.out.print("Enter the VIN of the vehicle you want to remove: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        Vehicle vehicleToRemove = null;
+
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vin) {
+                vehicleToRemove = vehicle;
+                break;
+            }
+        }
+
+        if (vehicleToRemove != null) {
+            dealership.removeVehicle(vehicleToRemove);
+
+            DealershipFileManager fileManager = new DealershipFileManager();
+            fileManager.saveDealership(dealership);
+
+            System.out.println("Vehicle removed successfully.");
+        } else {
+            System.out.println("Vehicle not found.");
+        }
+
     }
     private void init() {
         DealershipFileManager dealer = new DealershipFileManager();

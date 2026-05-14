@@ -130,7 +130,6 @@ public class Dealership {
         }
         return foundVehicles;
     }
-
     public List<Vehicle> getAllVehicles() {
         return inventory;
     }
