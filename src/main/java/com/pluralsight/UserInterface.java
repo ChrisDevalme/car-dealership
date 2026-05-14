@@ -107,7 +107,7 @@ public class UserInterface {
     }
     private void init() {
         DealershipFileManager dealer = new DealershipFileManager();
-        dealership = dealer.getDealership();
+        this.dealership = dealer.getDealership();
     }
 
 
