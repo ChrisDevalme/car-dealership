@@ -136,7 +136,31 @@ public class UserInterface {
 
     }
     public void processGetByMileageRequest() {
-        System.out.println("E");
+        int minMileage = -1;
+        while(minMileage == -1) {
+            System.out.println("Please enter minimum mileage.");
+            if(!scanner.hasNextInt()) {
+                System.out.println("Entry must be a positive number.");
+                scanner.nextLine();
+                continue;
+            }
+            minMileage = scanner.nextInt();
+            scanner.nextLine();
+        }
+
+        int maxMileage = 0;
+        while(maxMileage == 0) {
+            System.out.println("Please enter maximum Year.");
+            if(!scanner.hasNextInt()) {
+                System.out.println("Entry must be a positive number.");
+                scanner.nextLine();
+                continue;
+            }
+            maxMileage = scanner.nextInt();
+            scanner.nextLine();
+        }
+        System.out.println("Vehicles in the " + minMileage + " - " + maxMileage + " mileage range:" + "\n" + dealership.getVehiclesByMileage(minMileage,maxMileage));
+
     }
     public void processGetByVehicleTypeRequest() {
         System.out.println("F");
